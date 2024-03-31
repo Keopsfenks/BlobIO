@@ -8,11 +8,17 @@ namespace Baits {
 	public class Spawner : MonoBehaviour {
 		[SerializeField] private GameObject baitPrefab;
 		[SerializeField] private Vector2Int terrainSize;
-		[SerializeField] private List<Event> baitList;
+		[SerializeField] private List<EatenEvent> baitList;
 		[SerializeField] private int mapBaitsLimit = 100;
+		[SerializeField] private float baitRegenSeconds = 1f;
+		[SerializeField] private Coroutine _regenCoroutine;
 
 		private void Awake() {
 			SpawnAllBaits();
+		}
+
+		private void Start() {
+			_regenCoroutine = StartCoroutine(BaitsRegen());
 		}
 
 		private void SpawnAllBaits() {
@@ -27,10 +33,20 @@ namespace Baits {
 
 			Vector3 newBaitPos = new Vector3(randX, 0.2f, randZ);
 
-			GameObject bait = Instantiate(baitPrefab, newBaitPos, Quaternion.identity, transform);
-			Baits.Event tmpEvent = bait.GetComponent<Event>();
+			GameObject baitObject = Instantiate(baitPrefab, newBaitPos, Quaternion.identity, transform);
+			Baits.EatenEvent bait = baitObject.GetComponent<EatenEvent>();
+			baitList.Add(bait);
+			bait.baitListReference = baitList;
+			bait.eventHandler += bait.OnEatenAction;
+		}
 
-			baitList.Add(tmpEvent);
+		private IEnumerator BaitsRegen() {
+			while (true) {
+				if (baitList.Count < mapBaitsLimit) {
+					BaitsSpawner();
+				}
+				yield return new WaitForSeconds(baitRegenSeconds);
+			}
 		}
 	}
 }

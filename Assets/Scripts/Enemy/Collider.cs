@@ -1,21 +1,19 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Players {
+namespace Enemy {
 	public class Collider : MonoBehaviour {
 		public event UnityAction<Baits.EatenEvent> eventHandler;
-		private Players.Stats pStats;
-
-		private void Awake() {
-			pStats = FindObjectOfType<Players.Stats>();
-		}
 
 		private void OnTriggerEnter(UnityEngine.Collider other) {
 			if (other.TryGetComponent(out Baits.EatenEvent bait)) {
+				Debug.Log("Enems İs Enterred");
 				eventHandler?.Invoke(bait);
 				bait.OnEatenEvent();
-				pStats.SetBlobCount(1);
+
+				Enemy.Stats eStats = FindObjectOfType<Enemy.Stats>();
+				eStats.SetBlobCount(1);
 			}
 		}
 	}

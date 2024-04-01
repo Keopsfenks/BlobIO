@@ -570,7 +570,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -613,6 +613,8 @@ MonoBehaviour:
   - {fileID: 4281683080859636826, guid: 93df5c48d5e021040916b0e984d9b01a, type: 3}
   - {fileID: 6891580169314388076, guid: 66ae442726d1cf4428dacb34edd61ac4, type: 3}
   - {fileID: 7099655024501674456, guid: 8760cc9eb30a2b340b14499b6e150dc4, type: 3}
+  enemyList: []
+  terrainSize: {x: 100, y: 100}
 --- !u!4 &1575842438
 Transform:
   m_ObjectHideFlags: 0
@@ -853,7 +855,7 @@ MonoBehaviour:
   baitPrefab: {fileID: 185560054274474745, guid: 88ffc3776e3ff0c4987c4dfa197c634c, type: 3}
   terrainSize: {x: 100, y: 100}
   baitList: []
-  mapBaitsLimit: 100
+  mapBaitsLimit: 300
   baitRegenSeconds: 1
 --- !u!4 &1997637900
 Transform:
